@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desert to Cosmos: The Evolution of UAE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sand-light:#EAD6A8;
+    --sand-deep:#B97A3D;
+    --ink:#231A10;
+    --flag-red:#C8102E;
+    --flag-green:#00732F;
+    --cosmos-navy:#0A0E27;
+    --cosmos-deep:#050714;
+    --star-gold:#F4C95D;
+    --paper:#FBF3E3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Work Sans',sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    overflow-x:hidden;
+  }
+  h1,h2{font-family:'Amiri',serif;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:6vh 6vw;
+    background:radial-gradient(ellipse at center, var(--sand-light) 0%, var(--paper) 75%);
+    position:relative;
+  }
+  .lantern-row{
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    gap:8vw;
+    margin-bottom:2rem;
+  }
+  .lantern{
+    width:56px;
+    transform-origin:top center;
+    animation:swing 4.5s ease-in-out infinite;
+  }
+  .lantern.right{animation-delay:.6s;}
+  @keyframes swing{
+    0%,100%{transform:rotate(-6deg);}
+    50%{transform:rotate(6deg);}
+  }
+  .lantern svg{filter:drop-shadow(0 0 10px rgba(184,120,30,.55));}
+  .lantern .glow{animation:glow 2.4s ease-in-out infinite;}
+  @keyframes glow{
+    0%,100%{opacity:.55;}
+    50%{opacity:1;}
+  }
+  h1.title{
+    font-size:clamp(2rem,5vw,3.4rem);
+    font-weight:700;
+    color:var(--sand-deep);
+    letter-spacing:.01em;
+    line-height:1.25;
+    max-width:16ch;
+  }
+  .hero-rule{
+    width:64px;height:2px;
+    background:linear-gradient(90deg,var(--flag-red),var(--star-gold),var(--flag-green));
+    margin:1.6rem 0;
+  }
+  .hero p{
+    max-width:62ch;
+    font-size:1.05rem;
+    line-height:1.75;
+    color:#4a3a26;
+  }
+  .scroll-hint{
+    margin-top:3rem;
+    font-size:.8rem;
+    color:var(--sand-deep);
+    opacity:.7;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:.4rem;
+  }
+  .scroll-hint span{
+    width:1px;height:26px;background:var(--sand-deep);
+    animation:pulseLine 1.8s ease-in-out infinite;
+  }
+  @keyframes pulseLine{
+    0%,100%{opacity:.2;}
+    50%{opacity:1;}
+  }
+
+  /* ---------- SHARED ZONE ---------- */
+  .zone{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+    padding:8vh 7vw;
+  }
+  .zone-inner{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:4vw;
+    align-items:center;
+    width:100%;
+    max-width:1200px;
+    margin:0 auto;
+  }
+  .zone-text{
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity .9s ease, transform .9s ease;
+  }
+  .zone.in-view .zone-text{opacity:1;transform:translateY(0);}
+  .eyebrow{
+    font-size:.8rem;
+    letter-spacing:.08em;
+    font-weight:500;
+    margin-bottom:.9rem;
+  }
+  .zone h2{
+    font-size:clamp(1.6rem,3.2vw,2.3rem);
+    margin-bottom:1.1rem;
+    line-height:1.3;
+  }
+  .zone p{
+    font-size:1.02rem;
+    line-height:1.8;
+  }
+  .stage{
+    position:relative;
+    height:340px;
+  }
+
+  /* ---------- ROOTS ---------- */
+  .zone-roots{
+    background:linear-gradient(180deg,var(--sand-light) 0%, #DCC08A 100%);
+  }
+  .zone-roots .eyebrow{color:var(--sand-deep);}
+  .zone-roots p{color:#4a3a26;}
+  .horizon{
+    position:absolute;bottom:26%;left:0;right:0;height:2px;
+    background:rgba(74,58,38,.25);
+  }
+  .sheikhs{
+    position:absolute;
+    left:2%; right:2%;
+    bottom:26%;
+    height:132px;
+    color:var(--sand-deep);
+    opacity:0;
+    transition:opacity 1.8s ease .2s;
+    z-index:0;
+    pointer-events:none;
+  }
+  .zone.in-view .sheikhs{opacity:.24;}
+  .sheikhs svg{width:100%;height:100%;display:block;overflow:visible;}
+  .sheikhs path{fill:currentColor;}
+  .dhow{
+    position:absolute;bottom:26%;left:-140px;
+    width:120px;
+    animation:sail 14s linear infinite;
+  }
+  .zone.in-view .dhow{animation-play-state:running;}
+  @keyframes sail{
+    0%{left:-140px;}
+    100%{left:110%;}
+  }
+  .pearl{
+    position:absolute;
+    width:10px;height:10px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#fff,#cfae6c);
+    opacity:0;
+    animation:rise 5s ease-in infinite;
+  }
+  @keyframes rise{
+    0%{opacity:0; transform:translateY(0) scale(.6);}
+    15%{opacity:.9;}
+    100%{opacity:0; transform:translateY(-180px) scale(1);}
+  }
+
+  /* ---------- GROWTH ---------- */
+  .zone-growth{
+    background:linear-gradient(180deg,#DCC08A 0%, #F2E4C8 35%, #F7EFDC 100%);
+  }
+  .zone-growth .eyebrow{color:var(--flag-red);}
+  .zone-growth p{color:#3a2f20;}
+  .skyline-glow{
+    position:absolute;
+    bottom:0; left:6%; right:0;
+    width:88%; height:75%;
+    background:radial-gradient(ellipse at 50% 100%, rgba(244,201,93,.4) 0%, rgba(244,201,93,0) 70%);
+    z-index:0;
+    opacity:0;
+    transition:opacity 1.4s ease;
+  }
+  .zone.in-view .skyline-glow{opacity:1;}
+  .burj{
+    position:absolute;bottom:0;left:42%;
+    transform:translateX(-50%);
+    width:72px;
+    z-index:2;
+  }
+  .burj .tip-glow{
+    animation:glow 2.2s ease-in-out infinite;
+  }
+  .burj .window{
+    animation:twinkleWin 3s ease-in-out infinite;
+  }
+  .burj .window:nth-child(odd){animation-delay:.8s;}
+  @keyframes twinkleWin{
+    0%,100%{opacity:.25;}
+    50%{opacity:.9;}
+  }
+  .burj-arab{
+    position:absolute; bottom:0; left:66%;
+    width:56px;
+    z-index:1;
+    opacity:.88;
+  }
+  .burj-arab .sail-glow{
+    animation:glow 2.6s ease-in-out infinite;
+    animation-delay:.5s;
+  }
+  .burj-arab .window{
+    animation:twinkleWin 3.4s ease-in-out infinite;
+    animation-delay:.4s;
+  }
+  .track{
+    position:absolute; top:20%; left:-15%; right:-15%;
+    height:5px;
+    background:#9a9a9a;
+    border-radius:3px;
+    transform:rotate(-4deg);
+    z-index:1;
+  }
+  .track-post{
+    position:absolute; top:20%; width:3px; height:34px;
+    background:#9a9a9a; transform-origin:top;
+  }
+  .train{
+    position:absolute; top:12%;
+    width:62px;
+    animation:monorail 10s linear infinite;
+    z-index:2;
+  }
+  @keyframes monorail{
+    0%{left:-90px;}
+    100%{left:110%;}
+  }
+  .tolerance-row{
+    display:flex; flex-wrap:wrap; gap:.55rem;
+    margin-top:1.5rem;
+  }
+  .tolerance-chip{
+    padding:.45rem .85rem;
+    border-radius:999px;
+    background:rgba(0,115,47,.08);
+    border:1px solid rgba(0,115,47,.4);
+    font-size:.8rem;
+    font-weight:500;
+    color:var(--flag-green);
+    opacity:0;
+    transform:translateY(10px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .zone.in-view .tolerance-chip:nth-child(1){transition-delay:.1s; opacity:1; transform:translateY(0);}
+  .zone.in-view .tolerance-chip:nth-child(2){transition-delay:.25s; opacity:1; transform:translateY(0);}
+  .zone.in-view .tolerance-chip:nth-child(3){transition-delay:.4s; opacity:1; transform:translateY(0);}
+  .zone.in-view .tolerance-chip:nth-child(4){transition-delay:.55s; opacity:1; transform:translateY(0);}
+
+  /* ---------- COSMOS ---------- */
+  .zone-cosmos{
+    background:radial-gradient(ellipse at 30% 20%, #1a2350 0%, var(--cosmos-navy) 45%, var(--cosmos-deep) 100%);
+    color:var(--paper);
+  }
+  .zone-cosmos .eyebrow{color:var(--star-gold);}
+  .zone-cosmos p{color:#d8d9ea;}
+  .zone-cosmos h2{color:var(--paper);}
+  .stars{position:absolute;inset:0;}
+  .star{
+    position:absolute;
+    width:2px;height:2px;
+    background:#fff;
+    border-radius:50%;
+    animation:twinkle 3.2s ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{opacity:.15;}
+    50%{opacity:1;}
+  }
+  .rocket{
+    position:absolute;
+    left:50%;
+    bottom:-40px;
+    width:34px;
+    transform:translateX(-50%);
+    animation:launch 7s ease-in infinite;
+  }
+  @keyframes launch{
+    0%{bottom:-40px; opacity:0;}
+    10%{opacity:1;}
+    85%{opacity:1;}
+    100%{bottom:105%; opacity:0;}
+  }
+  .centennial{
+    display:inline-block;
+    margin-top:1.4rem;
+    font-family:'Amiri',serif;
+    font-size:1rem;
+    letter-spacing:.05em;
+    color:var(--star-gold);
+    border-top:1px solid rgba(244,201,93,.4);
+    padding-top:.6rem;
+  }
+
+  /* ---------- CONNECTOR PATHS ---------- */
+  .connector{
+    width:100%;
+    height:90px;
+    display:block;
+  }
+  .connector path{
+    fill:none;
+    stroke-width:2.5;
+    stroke-linecap:round;
+    stroke-dasharray:400;
+    stroke-dashoffset:400;
+    transition:stroke-dashoffset 1.4s ease;
+  }
+  .connector.in-view path{stroke-dashoffset:0;}
+  .c1 path{stroke:var(--sand-deep);}
+  .c2 path{stroke:var(--flag-red);}
+  .c3 path{stroke:var(--star-gold);}
+
+  /* ---------- CLOSING ---------- */
+  .closing{
+    min-height:60vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:6vh 6vw;
+    background:var(--cosmos-deep);
+  }
+  .closing p{
+    font-family:'Amiri',serif;
+    font-size:clamp(1.3rem,3vw,2rem);
+    max-width:20ch;
+    line-height:1.5;
+    background:linear-gradient(100deg,#F4C95D 0%,#fff 25%,#F4C95D 50%,#fff 75%,#F4C95D 100%);
+    background-size:200% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:shimmer 6s linear infinite;
+  }
+  @keyframes shimmer{
+    to{background-position:200% center;}
+  }
+
+  @media (max-width:760px){
+    .zone-inner{grid-template-columns:1fr;}
+    .stage{height:240px;order:-1;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="lantern-row">
+      <div class="lantern">
+        <svg viewBox="0 0 40 70" width="56">
+          <line x1="20" y1="0" x2="20" y2="10" stroke="#8a5a24" stroke-width="2"/>
+          <ellipse class="glow" cx="20" cy="34" rx="15" ry="22" fill="#e6a13b" opacity=".7"/>
+          <rect x="8" y="14" width="24" height="38" rx="10" fill="#c8842e" stroke="#7a4c1c" stroke-width="1.5"/>
+          <line x1="8" y1="24" x2="32" y2="24" stroke="#7a4c1c" stroke-width="1"/>
+          <line x1="8" y1="42" x2="32" y2="42" stroke="#7a4c1c" stroke-width="1"/>
+          <circle cx="20" cy="56" r="3" fill="#7a4c1c"/>
+        </svg>
+      </div>
+      <div class="lantern right">
+        <svg viewBox="0 0 40 70" width="56">
+          <line x1="20" y1="0" x2="20" y2="10" stroke="#8a5a24" stroke-width="2"/>
+          <ellipse class="glow" cx="20" cy="34" rx="15" ry="22" fill="#e6a13b" opacity=".7"/>
+          <rect x="8" y="14" width="24" height="38" rx="10" fill="#c8842e" stroke="#7a4c1c" stroke-width="1.5"/>
+          <line x1="8" y1="24" x2="32" y2="24" stroke="#7a4c1c" stroke-width="1"/>
+          <line x1="8" y1="42" x2="32" y2="42" stroke="#7a4c1c" stroke-width="1"/>
+          <circle cx="20" cy="56" r="3" fill="#7a4c1c"/>
+        </svg>
+      </div>
+    </div>
+    <h1 class="title">Desert to Cosmos: The Evolution of UAE</h1>
+    <div class="hero-rule"></div>
+    <p>Framing our display today are traditional lanterns on either side, symbolizing how the light of our heritage continues to guide us forward. Our board, titled 'Desert to Cosmos: The Evolution of UAE,' tells the remarkable story of a nation that transformed from a desert landscape into a global hub of the future — a journey shaped by vision, unity, and an unshakable ambition to look beyond the horizon.</p>
+    <div class="scroll-hint"><span></span>scroll</div>
+  </section>
+
+  <!-- CONNECTOR 1 -->
+  <svg class="connector c1" viewBox="0 0 400 90" preserveAspectRatio="none">
+    <path d="M20,10 C120,80 280,0 380,80" />
+  </svg>
+
+  <!-- ROOTS -->
+  <section class="zone zone-roots">
+    <div class="zone-inner">
+      <div class="zone-text">
+        <div class="eyebrow">Our roots</div>
+        <h2>1971 &nbsp;·&nbsp; Founding leaders &nbsp;·&nbsp; Pearl diving &nbsp;·&nbsp; Dhow boats</h2>
+        <p>Looking at the layout, the journey flows through a central pathway. Starting on the left, we look at our roots. We highlight 1971 when the Union was formed, our founding leaders, and traditional life like pearl diving and dhow boats. Long before skyscrapers lined the coast, these waters carried our ancestors' livelihood — divers plunging for pearls, and dhows sailing trade routes that connected the Gulf to the world. It was that same spirit of resilience and cooperation among the seven emirates that laid the foundation for the Union in 1971, guided by leaders who chose unity over division.</p>
+      </div>
+      <div class="stage">
+        <div class="horizon"></div>
+        <svg class="dhow" viewBox="0 0 120 90">
+          <path d="M10,60 Q60,80 110,60 L98,66 Q60,72 22,66 Z" fill="#7a4c1c"/>
+          <line x1="55" y1="60" x2="55" y2="14" stroke="#4a3a26" stroke-width="2"/>
+          <path d="M55,16 L90,58 L55,58 Z" fill="#EAD6A8" stroke="#B97A3D" stroke-width="1"/>
+        </svg>
+        <div class="pearl" style="left:20%; animation-delay:0s;"></div>
+        <div class="pearl" style="left:45%; animation-delay:1.6s;"></div>
+        <div class="pearl" style="left:68%; animation-delay:3.1s;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONNECTOR 2 -->
+  <svg class="connector c2" viewBox="0 0 400 90" preserveAspectRatio="none">
+    <path d="M20,80 C120,10 280,90 380,10" />
+  </svg>
+
+  <!-- GROWTH -->
+  <section class="zone zone-growth">
+    <div class="zone-inner">
+      <div class="zone-text" style="grid-column:1 / -1;">
+        <div class="eyebrow">Growth &amp; values</div>
+        <h2>Tolerance and unity, rising skyline</h2>
+        <p>Moving across the middle, the board showcases our core values of tolerance and unity, alongside landmarks like the Burj Khalifa and Burj Al Arab that show how much we have grown.</p>
+        <p>These values are lived daily, through initiatives like the Year of Tolerance and open spaces for people of every background to belong. The two towers behind this panel stand as symbols of that growth: one reaching the highest point on Earth, the other redefining ambition along the coastline, both built on the same belief that unity and vision can achieve anything.</p>
+        <div class="tolerance-row">
+          <span class="tolerance-chip">Tolerance</span>
+          <span class="tolerance-chip">Unity</span>
+          <span class="tolerance-chip">Ambition</span>
+          <span class="tolerance-chip">Progress</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONNECTOR 3 -->
+  <svg class="connector c3" viewBox="0 0 400 90" preserveAspectRatio="none">
+    <path d="M20,10 C120,80 280,0 380,80" />
+  </svg>
+
+  <!-- COSMOS -->
+  <section class="zone zone-cosmos">
+    <div class="stars"></div>
+    <div class="zone-inner">
+      <div class="zone-text">
+        <div class="eyebrow">Into the cosmos</div>
+        <h2>Space exploration &amp; Centennial 2071</h2>
+        <p>Finally, looking toward the right, the path leads up into the cosmos. This represents our future, space exploration, and the UAE Centennial 2071 vision. From the Hope Probe reaching Mars to ambitions of a settlement on the red planet by the nation's 100th anniversary, the same drive that turned pearls into skyscrapers is now reaching for the stars.</p>
+        <div class="centennial">UAE CENTENNIAL &middot; 2071</div>
+      </div>
+      <div class="stage">
+        <svg class="rocket" viewBox="0 0 34 90">
+          <path d="M17,0 C24,14 26,32 26,50 L8,50 C8,32 10,14 17,0Z" fill="#EAD6A8" stroke="#B97A3D" stroke-width="1.4"/>
+          <circle cx="17" cy="22" r="4" fill="#0A0E27"/>
+          <path d="M8,50 L2,66 L10,58Z" fill="#C8102E"/>
+          <path d="M26,50 L32,66 L24,58Z" fill="#C8102E"/>
+          <path d="M11,50 L23,50 L20,64 L14,64Z" fill="#F4C95D"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <footer class="closing">
+    <p>From the desert to the stars, this board shows our nation's incredible journey.</p>
+  </footer>
+
+<script>
+  // Scatter stars
+  const starsField = document.querySelector('.stars');
+  for(let i=0;i<70;i++){
+    const s = document.createElement('div');
+    s.className='star';
+    s.style.left = Math.random()*100+'%';
+    s.style.top = Math.random()*100+'%';
+    s.style.animationDelay = (Math.random()*3)+'s';
+    s.style.width = s.style.height = (Math.random()*2+1)+'px';
+    starsField.appendChild(s);
+  }
+
+  // Reveal zones + connectors on scroll
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+      }
+    });
+  },{threshold:0.3});
+
+  document.querySelectorAll('.zone, .connector').forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
